@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Gia Nhập Băng Hải Tặc</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2 class="form-title">PHIẾU GIA NHẬP BĂNG HẢI TẶC</h2>
+        
+        <form id="pirateForm">
+            <div class="form-row">
+                <label for="ma_ht">MÃ LỆNH TRUY NÃ</label>
+                <div class="input-wrapper">
+                    <input type="text" id="ma_ht" name="ma_ht" placeholder="Ví dụ: B001 (Nếu có)">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="ho_ten">HỌ TÊN / BIỆT DANH</label>
+                <div class="input-wrapper">
+                    <input type="text" id="ho_ten" name="ho_ten" placeholder="Tên gọi trên giang hồ...">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="email">THƯ ĐIỆN TỬ (EMAIL)</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" placeholder="Địa chỉ nhận thư trúng tuyển...">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="sdt">SỐ ĐIỆN THOẠI</label>
+                <div class="input-wrapper">
+                    <input type="tel" id="sdt" name="sdt" placeholder="Số Ốc sên truyền tin (Den Den Mushi)...">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="ngay_sinh">NGÀY RA ĐỜI</label>
+                <div class="input-wrapper">
+                    <input type="text" id="ngay_sinh" name="ngay_sinh" placeholder="dd/mm/yyyy">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>GIỚI TÍNH</label>
+                <div class="input-wrapper radio-group">
+                    <label><input type="radio" name="gioi_tinh" value="nam" checked> Nam</label>
+                    <label><input type="radio" name="gioi_tinh" value="nu"> Nữ</label>
+                    <label><input type="radio" name="gioi_tinh" value="khac"> Khác</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="vi_tri">VỊ TRÍ ỨNG TUYỂN</label>
+                <div class="input-wrapper">
+                    <div class="custom-dropdown">
+                        <div class="dropdown-selected">Thuyền Viên</div>
+                        <div class="dropdown-options">
+                            <div class="option" data-value="thuyen_vien">Thuyền Viên</div>
+                            <div class="option" data-value="kiem_si">Kiếm sĩ</div>
+                            <div class="option" data-value="hoa_tieu">Hoa tiêu</div>
+                            <div class="option" data-value="bac_si">Bác sĩ</div>
+                            <div class="option" data-value="dau_bep">Đầu bếp</div>
+                            <div class="option" data-value="tho_dong_tau">Thợ đóng tàu</div>
+                            <div class="option" data-value="khao_co">Khảo cổ</div>
+                            <div class="option" data-value="it_tau">Lập trình viên / IT hệ thống tàu</div>
+                            <div class="option" data-value="xa_thu">Xạ thủ</div>
+                            <div class="option" data-value="nhac_cong">Nhạc công</div>
+                            <div class="option" data-value="lai_tau">Lái tàu</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="vi_tri" name="vi_tri" value="thuyen_vien">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>KỸ NĂNG ĐẶC BIỆT</label>
+                <div class="input-wrapper checkbox-group">
+                    <label><input type="checkbox" name="ky_nang" value="trai_ac_quy"> Trái Ác Quỷ</label>
+                    <label><input type="checkbox" name="ky_nang" value="haki"> Haki</label>
+                    <label><input type="checkbox" name="ky_nang" value="code"> Gõ Code thần tốc</label>
+                </div>
+            </div>
+
+            <div class="form-row note-row">
+                <label for="ly_do">LỜI TUYÊN THỆ</label>
+                <div class="input-wrapper">
+                    <textarea id="ly_do" name="ly_do" placeholder="Tại sao bạn muốn ra khơi cùng chúng tôi? (Nhập ít nhất 20 ký tự)..."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-submit">RA KHƠI</button>
+                <button type="reset" class="btn-reset">VIẾT LẠI</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+    <script src="script.js"></script>
+
+    <!-- Đổi href thành tên file ảnh của bạn -->
+    <a href="donate.html" target="_blank" class="donate-btn" title="Donate quỹ mua thịt cho Thuyền trưởng!">
+        <div class="donate-icon">🍖</div>
+        <span class="donate-text">Donate cho Thuyền Trưởng</span>
+    </a>
+</body>
+</html>

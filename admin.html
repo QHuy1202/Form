@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Băng Hải Tặc</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+        h2 { text-align: center; color: #333; }
+        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background: #1a1a1a; color: white; }
+        .btn { padding: 6px 12px; cursor: pointer; border: none; color: white; border-radius: 4px; font-weight: bold; }
+        .btn-green { background: #28a745; }
+        .btn-green:hover { background: #218838; }
+        .btn-red { background: #dc3545; }
+        .btn-red:hover { background: #c82333; }
+        .status { font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>☠️ BẢNG ĐIỀU KHIỂN THUYỀN TRƯỞNG</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ Tên</th>
+                <th>Vị Trí</th>
+                <th>Lý Do</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody id="bang-ho-so">
+            </tbody>
+    </table>
+
+    <script>
+        // Hàm kéo dữ liệu từ Node.js về và in ra bảng
+        function loadDanhSach() {
+            fetch('http://localhost:3000/api/danh-sach-ho-so')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('bang-ho-so');
+                tbody.innerHTML = ''; // Xóa dữ liệu cũ
+                
+                data.forEach(hs => {
+                    // Dịch trạng thái ra tiếng Việt
+                    let statusText = hs.trang_thai === 'cho_duyet' ? '⏳ Chờ duyệt' : 
+                                     hs.trang_thai === 'dong_y' ? '✅ Đã nhận' : '❌ Từ chối';
+                    
+                    // Nếu đang chờ duyệt thì mới hiện 2 nút bấm
+                    let actionBtns = hs.trang_thai === 'cho_duyet' ? `
+                        <button class="btn btn-green" onclick="duyetHoSo(${hs.id}, 'dong_y')">Nhận</button>
+                        <button class="btn btn-red" onclick="duyetHoSo(${hs.id}, 'tu_choi')">Từ chối</button>
+                    ` : '';
+
+                    // Nối thêm 1 dòng vào bảng
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>#${hs.id}</td>
+                            <td><b>${hs.ho_ten}</b></td>
+                            <td>${hs.vi_tri}</td>
+                            <td>${hs.ly_do}</td>
+                            <td class="status">${statusText}</td>
+                            <td>${actionBtns}</td>
+                        </tr>
+                    `;
+                });
+            })
+            .catch(err => console.error("Lỗi kéo dữ liệu:", err));
+        }
+
+        // Hàm gọi API duyệt hồ sơ (Tái sử dụng lại API cũ)
+        function duyetHoSo(id, action) {
+            fetch(`http://localhost:3000/api/duyet-ho-so?id=${id}&action=${action}`)
+            .then(res => res.text())
+            .then(msg => {
+                alert(msg);       // Báo popup thành công (và mail cũng tự bay đi)
+                loadDanhSach();   // Load lại bảng ngay lập tức để cập nhật trạng thái
+            });
+        }
+
+        // Chạy hàm lấy dữ liệu ngay khi vừa mở trang
+        loadDanhSach();
+    </script>
+
+</body>
+</html>

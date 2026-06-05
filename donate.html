@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiếp Tế Cho Thuyền Trưởng</title>
+    <style>
+        /* Tạo nền dark-mode kết hợp ánh sáng neon xanh - đỏ */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hiệu ứng mờ ảo (glow) đằng sau */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 85, 0.15) 0%, rgba(0, 212, 255, 0.1) 40%, transparent 70%);
+            animation: pulse 5s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Khung chứa thẻ QR */
+        .qr-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(20, 20, 20, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(255, 0, 85, 0.3);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 0;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+
+        p {
+            color: #ccc;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Chỉnh ảnh QR Code */
+        .qr-image {
+            width: 300px; /* Kích thước ảnh QR */
+            height: auto;
+            border-radius: 15px;
+            border: 3px solid #ff0055;
+            padding: 10px;
+            background: #fff;
+        }
+
+        .thank-you {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ff0055;
+            text-shadow: 0 0 5px rgba(255, 0, 85, 0.8);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="qr-container">
+        <h1>Kho Báu Của Thuyền Trưởng</h1>
+        <p>Quét mã bên dưới để tiếp tế quỹ nhé!</p>
+        
+        <!-- Đổi "qr-mb.png" thành tên file ảnh mã QR thực tế của bạn -->
+        <img src="images/qr-mb.png" alt="QR Code MB Bank" class="qr-image">
+        
+        <div class="thank-you">Cảm ơn bạn đã ủng hộ băng Mũ Rơm! 🍖🍻</div>
+    </div>
+
+</body>
+</html>

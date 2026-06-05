@@ -1,0 +1,171 @@
+/* =========================================
+   GIAO DIỆN TRANG CHỜ KẾT QUẢ (success.html)
+   ========================================= */
+
+/* Class riêng cho body trang chờ để dễ canh giữa và set ảnh nền khác nếu muốn */
+.success-page {
+    background-image: url('images/Background-cho-thong-bao.jpg'); 
+    flex-direction: column;
+    position: relative; /* Để cái footer bám vào dưới cùng */
+}
+
+/* Khung chữ nổi giữa màn hình */
+.waiting-box {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    padding: 50px 40px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
+    max-width: 600px;
+    margin-bottom: 80px; /* Chừa chỗ cho footer khỏi đè lên */
+    animation: sparkleGlow 4s infinite alternate; /* Dùng lại hiệu ứng chớp sáng của form */
+}
+
+.waiting-box h2 {
+    color: #ffcc00;
+    font-size: 28px;
+    text-shadow: 2px 2px 5px #000;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.waiting-box p {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px #000;
+}
+
+/* Kích thước cờ Mũ Rơm */
+.pirate-flag {
+    width: 180px; 
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.5));
+    transition: transform 0.3s ease;
+}
+
+.pirate-flag:hover {
+    transform: scale(1.1) rotate(5deg); /* Đưa chuột vào cờ sẽ phóng to hơi nghiêng */
+}
+
+/* Footer Liên hệ */
+.contact-footer {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.contact-footer p {
+    color: #ffcc00;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px #000;
+    letter-spacing: 1px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.social-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 1px 1px 2px #000;
+    transition: all 0.3s ease;
+}
+
+.social-links a i {
+    font-size: 24px; /* Chỉnh icon bự lên xíu */
+}
+
+/* Hiệu ứng rê chuột đổi màu theo từng mạng xã hội */
+.social-links a:hover {
+    transform: translateY(-3px);
+}
+.social-links a:nth-child(1):hover { color: #1877F2; } /* Màu Facebook */
+.social-links a:nth-child(2):hover { color: #E1306C; } /* Màu Instagram */
+.social-links a:nth-child(3):hover { color: #0088cc; } /* Màu Telegram */
+.social-links a:nth-child(4):hover { color: #25D366; } /* Màu Điện thoại */
+
+/* =========================================
+   THIẾT KẾ TRANG CHỜ CHO ĐIỆN THOẠI
+   ========================================= */
+@media screen and (max-width: 768px) {
+    .waiting-box {
+        margin: 20px;
+        padding: 30px 20px; /* Thu nhỏ khung thông báo lại */
+    }
+
+    .waiting-box h2 {
+        font-size: 22px; /* Hạ size chữ xuống cho khỏi bị rớt chữ */
+    }
+
+    .pirate-flag {
+        width: 150px; /* Cờ nhỏ lại xíu cho cân đối màn hình đt */
+    }
+
+    .social-links {
+        gap: 15px;
+        flex-direction: column; /* Các link liên hệ xếp dọc cho dễ bấm */
+    }
+}
+
+/* =========================================
+   NÚT DONATE GÓC MÀN HÌNH
+   ========================================= */
+.donate-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px; /* Nếu muốn nó sang góc trái thì đổi chữ right thành left nha */
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.6); /* Hiệu ứng neon phát sáng */
+    z-index: 1000; /* Đảm bảo nút luôn nổi trên mọi thứ khác */
+    transition: all 0.3s ease;
+}
+
+.donate-btn:hover {
+    transform: translateY(-5px) scale(1.05); /* Rê chuột vào thì nút nảy lên bự ra */
+    box-shadow: 0 0 25px rgba(255, 152, 0, 0.9);
+}
+
+/* Hiệu ứng miếng thịt nảy nảy dụ dỗ */
+.donate-icon {
+    font-size: 24px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Ẩn bớt chữ khi xem trên điện thoại cho gọn, chỉ để lại icon */
+@media screen and (max-width: 768px) {
+    .donate-text { display: none; }
+    .donate-btn { 
+        padding: 15px; 
+        border-radius: 50%; 
+        bottom: 20px;
+        right: 20px;
+    }
+}

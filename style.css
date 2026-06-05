@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    /* Hình nền gốc của bạn */
+    background-image: url('images/Background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #111; /* Màu dự phòng nếu lỗi ảnh */
+}
+
+/* Container chính của form */
+.form-container {
+    width: 100%;
+    max-width: 700px;
+    
+    /* MỚI: Đổi thành màu đen nhưng độ trong suốt cực thấp (0.2) */
+    background: rgba(0, 0, 0, 0.2); 
+    
+    /* MỚI: Giảm độ mờ kính xuống để ảnh nền sắc nét hơn (hoặc bạn có thể xóa luôn dòng này nếu muốn trong suốt 100%) */
+    backdrop-filter: blur(2px); 
+    
+    border-radius: 20px; 
+    padding: 30px;
+    border: 2px solid transparent;
+    animation: sparkleGlow 4s infinite alternate;
+}
+
+/* Keyframes tạo hiệu ứng lấp lánh như màu của ảnh nền (Đỏ - Cam - Vàng) */
+@keyframes sparkleGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.5), 0 0 20px rgba(255, 0, 0, 0.3);
+        border-color: rgba(255, 69, 0, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 140, 0, 0.5);
+        border-color: rgba(255, 215, 0, 0.9);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5), 0 0 20px rgba(255, 69, 0, 0.3);
+        border-color: rgba(255, 0, 0, 0.6);
+    }
+}
+
+.form-title {
+    text-align: center;
+    color: #ffcc00;
+    text-shadow: 0 0 10px #ff6600, 0 0 20px #ff3300;
+    margin-bottom: 25px;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+/* Bố cục từng dòng (Label bên trái, Input bên phải) */
+.form-row {
+    display: flex;
+    border-top: 1px solid rgba(255, 69, 0, 0.3);
+    padding: 15px 0;
+}
+
+/* Ẩn viền trên của dòng đầu tiên để form liền mạch hơn */
+.form-row:first-of-type {
+    border-top: none;
+}
+
+.form-row > label {
+    flex: 0 0 180px; /* Độ rộng cố định cho nhãn */
+    color: #ffcc00;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.input-wrapper {
+    flex: 1;
+}
+
+/* Style cho tất cả các ô nhập liệu */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid #444;
+    
+    /* MỚI: Đổi chữ lúc nhập thành màu vàng, in đậm và có viền đen */
+    color: #ffcc00;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px #000;
+    font-size: 15px;
+    
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+/* MỚI: Làm mờ chữ hướng dẫn (placeholder) để dễ phân biệt với chữ đã nhập */
+::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: normal;
+    text-shadow: none;
+}
+
+/* Hiệu ứng khi click vào ô nhập liệu */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #ff8c00;
+    box-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
+}
+
+/* Fix chiều cao cho textarea */
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Style cho Radio và Checkbox */
+.radio-group,
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #fff;
+}
+
+.radio-group label,
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #ff0000; /* Đổi màu tick/chọn sang đỏ */
+}
+
+/* Phần Nút bấm (Button) */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 69, 0, 0.3);
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    border: 2px solid;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Nút Submit (Ra khơi) */
+.btn-submit {
+    background-color: #ff2a00;
+    border-color: #ff8c00;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+}
+
+.btn-submit:hover {
+    background-color: #ff5500;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.8);
+}
+
+/* Nút Reset (Viết lại) */
+.btn-reset {
+    background-color: transparent;
+    border-color: #ff0000;
+    color: #ff4d4d;
+}
+
+.btn-reset:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* =========================================
+    CUSTOM BẢNG LỊCH FLATPICKR 
+   ========================================= */
+.flatpickr-calendar {
+    /* ĐÂY LÀ CHỖ CHÈN ẢNH NỀN CHO LỊCH */
+    background-image: url('images/anhlich.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    
+    /* Lớp lót đen mờ để lỡ ảnh sáng quá vẫn thấy rõ chữ số */
+    background-color: rgba(20, 20, 20, 0.85) !important; 
+    border: 1px solid #ff8c00 !important;
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.6) !important;
+}
+
+/* Custom màu chữ và hiệu ứng lúc trỏ chuột */
+.flatpickr-calendar, 
+.flatpickr-day, 
+.flatpickr-weekday, 
+.flatpickr-current-month {
+    /* Đổi sang màu vàng tươi */
+    color: #ffcc00 !important; 
+    
+    /* Thêm viền đen xung quanh chữ để không bị chìm vào nền sáng */
+    text-shadow: 1px 1px 2px #000, -1px -1px 2px #000, 1px -1px 2px #000, -1px 1px 2px #000 !important; 
+    
+    font-weight: bold !important; /* In đậm lên cho dễ đọc */
+}
+
+/* Các ngày của tháng trước/sau làm mờ đi một chút cho đỡ rối */
+.flatpickr-day.prevMonthDay, 
+.flatpickr-day.nextMonthDay {
+    color: rgba(255, 204, 0, 0.4) !important;
+    text-shadow: none !important;
+}
+
+/* Hiệu ứng khi rê chuột và chọn ngày */
+.flatpickr-day:hover, 
+.flatpickr-day.selected {
+    background-color: rgba(255, 69, 0, 0.9) !important; /* Nền đỏ cam */
+    border-color: #ffcc00 !important;
+    color: #fff !important; /* Khi chọn thì đổi lại chữ trắng cho nổi */
+    text-shadow: 1px 1px 3px #000 !important;
+}
+
+/* Mũi tên đổi tháng */
+.flatpickr-prev-month svg, 
+.flatpickr-next-month svg {
+    fill: #ffcc00 !important;
+}
+
+/* =========================================
+   CUSTOM DROPDOWN (Thay thế Select mặc định)
+   ========================================= */
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-selected {
+    background-color: rgba(0, 0, 0, 0.4); /* Nền mờ xuyên thấu */
+    border: 1px solid #444;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Mũi tên trỏ xuống */
+.dropdown-selected::after {
+    content: '▼';
+    font-size: 12px;
+    color: #ffcc00;
+}
+
+.dropdown-selected:hover, .dropdown-selected.active {
+    border-color: #ff8c00;
+    box-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
+}
+
+.dropdown-options {
+    display: none; /* Ẩn menu khi chưa click */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 5px;
+    background-color: rgba(10, 10, 10, 0.8); /* Đen mờ để nhìn xuyên background tổng */
+    backdrop-filter: blur(8px); /* Hiệu ứng kính */
+    border: 1px solid #ff8c00;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+    z-index: 99;
+    max-height: 200px; /* Giới hạn chiều cao */
+    overflow-y: auto;  /* Thêm thanh cuộn nếu quá dài */
+}
+
+/* Hiển thị khi được thêm class 'show' bằng JS */
+.dropdown-options.show {
+    display: block;
+}
+
+.dropdown-options .option {
+    padding: 10px 15px;
+    color: #ffcc00; /* Chữ vàng tone hải tặc */
+    text-shadow: 1px 1px 2px #000; /* Viền đen cho chữ nổi bật */
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 69, 0, 0.3);
+    transition: 0.2s;
+}
+
+.dropdown-options .option:last-child {
+    border-bottom: none;
+}
+
+.dropdown-options .option:hover {
+    background-color: rgba(255, 69, 0, 0.7); /* Đổi màu khi hover */
+    color: #fff;
+}
+
+/* Custom thanh cuộn (scrollbar) cho đẹp */
+.dropdown-options::-webkit-scrollbar {
+    width: 6px;
+}
+.dropdown-options::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+.dropdown-options::-webkit-scrollbar-thumb {
+    background: #ff8c00;
+    border-radius: 10px;
+}
+
+/* =========================================
+   THIẾT KẾ CHO ĐIỆN THOẠI (RESPONSIVE)
+   ========================================= */
+@media screen and (max-width: 768px) {
+    .form-container {
+        padding: 20px 15px; /* Giảm lề bên trong cho đỡ chật */
+        margin: 15px; /* Thêm lề ngoài để form không chạm sát viền điện thoại */
+    }
+
+    .form-row {
+        flex-direction: column; /* Bẻ gập label và input thành 2 hàng trên/dưới */
+        align-items: flex-start;
+    }
+
+    .form-row > label {
+        flex: none; /* Xóa độ rộng cố định 180px */
+        width: 100%;
+        margin-bottom: 10px; /* Cách ô nhập liệu phía dưới một khoảng */
+        font-size: 13px;
+    }
+
+    .radio-group, 
+    .checkbox-group {
+        flex-wrap: wrap; /* Nếu lựa chọn dài quá thì tự rớt dòng */
+        gap: 10px 20px;
+    }
+
+    .button-group {
+        flex-direction: column; /* Các nút bấm xếp chồng lên nhau */
+        gap: 15px;
+    }
+
+    button {
+        width: 100%; /* Nút kéo dài 100% bấm bằng ngón tay cho dễ */
+    }
+}
+
+/* =========================================
+   NÚT DONATE GÓC MÀN HÌNH
+   ========================================= */
+.donate-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px; /* Nếu muốn nó sang góc trái thì đổi chữ right thành left nha */
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.6); /* Hiệu ứng neon phát sáng */
+    z-index: 1000; /* Đảm bảo nút luôn nổi trên mọi thứ khác */
+    transition: all 0.3s ease;
+}
+
+.donate-btn:hover {
+    transform: translateY(-5px) scale(1.05); /* Rê chuột vào thì nút nảy lên bự ra */
+    box-shadow: 0 0 25px rgba(255, 152, 0, 0.9);
+}
+
+/* Hiệu ứng miếng thịt nảy nảy dụ dỗ */
+.donate-icon {
+    font-size: 24px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Ẩn bớt chữ khi xem trên điện thoại cho gọn, chỉ để lại icon */
+@media screen and (max-width: 768px) {
+    .donate-text { display: none; }
+    .donate-btn { 
+        padding: 15px; 
+        border-radius: 50%; 
+        bottom: 20px;
+        right: 20px;
+    }
+}
