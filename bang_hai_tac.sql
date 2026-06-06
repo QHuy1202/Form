@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS bang_hai_tac CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE bang_hai_tac;
 
 CREATE TABLE IF NOT EXISTS ho_so_ung_tuyen (
     id INT AUTO_INCREMENT PRIMARY KEY,

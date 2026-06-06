@@ -9,11 +9,11 @@ app.use(cors());
 
 // 1. Cấu hình Database
 const db = mysql.createConnection({
-    host: 'localhost',
-    port: 3308,
-    user: 'root',
-    password: '',
-    database: 'bang_hai_tac'
+    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com',
+    port: 22059,
+    user: 'avnadmin',
+    password: 'AVNS_59Y53sTggDfEvCZEtrf',
+    database: 'defaultdb'
 });
 
 // 2. Cấu hình Nodemailer (Dùng Gmail của bạn)
