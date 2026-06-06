@@ -72,7 +72,7 @@ document.getElementById("pirateForm").addEventListener("submit", function(event)
     submitBtn.disabled = true;
 
     // Bắn dữ liệu qua Node.js
-    fetch('http://localhost:3000/api/nop-ho-so', {
+    fetch('https://bang-hai-tac-api.onrender.com/api/nop-ho-so', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
