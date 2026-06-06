@@ -31,7 +31,7 @@ const transporter = nodemailer.createTransport({
 // ==========================================
 // API 1: XỬ LÝ KHI ỨNG VIÊN BẤM "RA KHƠI"
 // ==========================================
-app.post('/api/nop-ho-so', (req, res) => {
+app.post('/api/nop-ho-so', async(req, res) => {
     const data = req.body; // Dữ liệu từ form gửi lên
 
     // MỚI: Thêm từ điển dịch chức danh ở đây
@@ -60,7 +60,7 @@ app.post('/api/nop-ho-so', (req, res) => {
         const insertId = result.insertId; // Lấy ID của hồ sơ vừa nộp
 
         // 1. Gửi mail thông báo chờ duyệt cho Ứng viên
-        transporter.sendMail({
+        await transporter.sendMail({
             from: '"Băng Hải Tặc Mũ Rơm" <tnquochuy10@gmail.com>',
             to: data.email,
             subject: 'Đã nhận hồ sơ gia nhập!',
@@ -72,7 +72,7 @@ app.post('/api/nop-ho-so', (req, res) => {
         const linkDongY = `http://localhost:3000/api/duyet-ho-so?id=${insertId}&action=dong_y`;
         const linkTuChoi = `http://localhost:3000/api/duyet-ho-so?id=${insertId}&action=tu_choi`;
 
-        transporter.sendMail({
+        await transporter.sendMail({
             from: '"Hệ thống Tàu" <tnquochuy10@gmail.com>',
             to: 'tnquochuy10@gmail.com', // Mail của bạn
             subject: `[CÓ HỒ SƠ MỚI] Ứng viên: ${data.ho_ten}`,
@@ -107,7 +107,7 @@ app.get('/api/duyet-ho-so', (req, res) => {
             const ungVien = rows[0];
 
             if (action === 'dong_y') {
-                transporter.sendMail({
+                await transporter.sendMail({
                     from: '"Băng Hải Tặc Mũ Rơm" <tnquochuy10@gmail.com>',
                     to: ungVien.email,
                     subject: '🎉 CHÚC MỪNG! BẠN ĐÃ ĐƯỢC NHẬN!',
@@ -115,7 +115,7 @@ app.get('/api/duyet-ho-so', (req, res) => {
                 });
                 res.send('Đã duyệt ĐỒNG Ý và gửi mail báo cho ứng viên!');
             } else {
-                transporter.sendMail({
+                awaittransporter.sendMail({
                     from: '"Băng Hải Tặc Mũ Rơm" <tnquochuy10@gmail.com>',
                     to: ungVien.email,
                     subject: 'Thư từ chối...',
