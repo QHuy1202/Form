@@ -13,7 +13,10 @@ const db = mysql.createConnection({
     port: 22059,
     user: 'avnadmin',
     password: 'AVNS_59Y53sTggDfEvCZEtrf',
-    database: 'defaultdb'
+    database: 'defaultdb',
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 // 2. Cấu hình Nodemailer (Dùng Gmail của bạn)
