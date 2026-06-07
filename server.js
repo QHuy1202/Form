@@ -11,14 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 // 🌟 ĐỊA CHỈ CHUẨN: Có chữ 'g' và có hàm .trim()
-const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    ssl: { rejectUnauthorized: false }
-});
+const db = mysql.createPool(process.env.DATABASE_URL || 'mysql://avnadmin:PASSWORD_CUA_BAN_O_DAY@bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com:22059/defaultdb?ssl-mode=REQUIRED');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
