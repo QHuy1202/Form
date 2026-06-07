@@ -3,11 +3,14 @@ const mysql = require('mysql2');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 
+// 🌟 BẮT BUỘC CÓ: Ép Render tìm đường bằng IPv4
+require('dns').setDefaultResultOrder('ipv4first');
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Trả lại chữ 'g' và xóa bỏ thần chú IPv4 gây nhiễu sóng
+// 🌟 ĐỊA CHỈ CHUẨN: Có chữ 'g' và có hàm .trim()
 const db = mysql.createPool({
     host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com'.trim(),
     port: 22059,
@@ -35,6 +38,9 @@ const transporter = nodemailer.createTransport({
 // ==========================================
 app.post('/api/nop-ho-so', (req, res) => {
     const data = req.body; 
+    
+    // Tui thêm dòng log này để lỡ có lỗi mình biết Frontend gửi gì lên
+    console.log("DỮ LIỆU FRONTEND GỬI LÊN:", data);
 
     const tuDienViTri = {
         'thuyen_vien': 'Thuyền Viên ⚓',
@@ -56,7 +62,7 @@ app.post('/api/nop-ho-so', (req, res) => {
     
     db.query(sql, [data.ma_ht, data.ho_ten, data.email, data.sdt, data.ngay_sinh, data.gioi_tinh, data.vi_tri, data.ly_do], async (err, result) => {
         if (err) {
-            console.error("Lỗi Database:", err);
+            console.error("LỖI DATABASE KHI LƯU:", err);
             return res.status(500).json({ error: "Lỗi lưu dữ liệu: " + err.message });
         }
         
@@ -89,15 +95,12 @@ app.post('/api/nop-ho-so', (req, res) => {
 
             res.json({ message: 'Nộp hồ sơ thành công!' });
         } catch (mailError) {
-            console.error("Lỗi gửi mail:", mailError);
+            console.error("LỖI GỬI MAIL:", mailError);
             res.status(500).json({ error: "Hồ sơ đã lưu nhưng lỗi gửi mail!" });
         }
     });
 });
 
-// ==========================================
-// API 2: XỬ LÝ KHI BẠN BẤM NÚT TRONG EMAIL
-// ==========================================
 app.get('/api/duyet-ho-so', (req, res) => {
     const { id, action } = req.query; 
 
@@ -114,7 +117,7 @@ app.get('/api/duyet-ho-so', (req, res) => {
                     await transporter.sendMail({
                         from: '"Băng Hải Tặc Mũ Rơm" <tnquochuy10@gmail.com>',
                         to: ungVien.email,
-                        subject: '🎉 CHÚC MỪNG! BẠN ĐÃ ĐƯỢC NHẬN!',
+                        subject: '🎉 CHÚC MỪNG! BẠN ĐĐƯỢC NHẬN!',
                         html: `<h3>Chào ${ungVien.ho_ten},</h3><p>Thuyền trưởng đã đồng ý! Chuẩn bị hành lý nhổ neo thôi!</p>`
                     });
                     res.send('Đã duyệt ĐỒNG Ý và gửi mail báo cho ứng viên!');
@@ -134,9 +137,6 @@ app.get('/api/duyet-ho-so', (req, res) => {
     });
 });
 
-// ==========================================
-// API 3: LẤY DANH SÁCH HỒ SƠ CHO GIAO DIỆN ADMIN
-// ==========================================
 app.get('/api/danh-sach-ho-so', (req, res) => {
     db.query('SELECT * FROM ho_so_ung_tuyen ORDER BY id DESC', (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
