@@ -8,16 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 // 1. Cấu hình Database
-const db = mysql.createConnection({
-    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com',
-    port: 22059,
-    user: 'avnadmin',
-    password: 'AVNS_59Y53sTggDfEvCZEtrf',
-    database: 'defaultdb',
-    ssl: {
-        rejectUnauthorized: false
-    }
-});
+const db = mysql.createConnection('mysql://avnadmin:AVNS_59Y53sTggDfEvCZEtrf@bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com:22059/defaultdb?ssl-mode=REQUIRED');
 
 // 2. Cấu hình Nodemailer
 const transporter = nodemailer.createTransport({
@@ -143,6 +134,8 @@ app.get('/api/danh-sach-ho-so', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log('Server Hải Tặc đang chạy ở port 3000...');
+// Phải dùng process.env.PORT để Render tự cấp cổng
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server Hải Tặc đang chạy ở port ${PORT}...`);
 });
