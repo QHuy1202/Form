@@ -12,7 +12,7 @@ app.use(cors());
 
 // 🌟 THAY ĐỔI QUAN TRỌNG: Dùng createPool thay vì createConnection
 const db = mysql.createPool({
-    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com',
+    host: 'bang-hai-tac-db-tnquochuy10-73da.a.aivencloud.com',
     port: 22059,
     user: 'avnadmin',
     password: 'AVNS_59Y53sTggDfEvCZEtrf',
