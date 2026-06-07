@@ -3,26 +3,29 @@ const mysql = require('mysql2');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 
-// 🧙‍♂️ THẦN CHÚ TRỊ LỖI ENOTFOUND: Ép Node.js ưu tiên tìm đường IPv4
+// Thần chú IPv4
 require('dns').setDefaultResultOrder('ipv4first');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 1. Cấu hình Database an toàn (Đã gắn hàm .trim() để chặn ký tự tàng hình)
-const db = mysql.createConnection({
-    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com'.trim(),
+// 🌟 THAY ĐỔI QUAN TRỌNG: Dùng createPool thay vì createConnection
+const db = mysql.createPool({
+    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com',
     port: 22059,
     user: 'avnadmin',
-    password: 'AVNS_59Y53sTggDfEvCZEtrf'.trim(),
+    password: 'AVNS_59Y53sTggDfEvCZEtrf',
     database: 'defaultdb',
     ssl: {
         rejectUnauthorized: false
-    }
+    },
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
-// 2. Cấu hình Nodemailer
+// Cấu hình Nodemailer
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -55,8 +58,12 @@ app.post('/api/nop-ho-so', (req, res) => {
     
     const sql = `INSERT INTO ho_so_ung_tuyen (ma_ht, ho_ten, email, sdt, ngay_sinh, gioi_tinh, vi_tri, ly_do) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     
+    // createPool vẫn dùng db.query mượt mà y như cũ
     db.query(sql, [data.ma_ht, data.ho_ten, data.email, data.sdt, data.ngay_sinh, data.gioi_tinh, data.vi_tri, data.ly_do], async (err, result) => {
-        if (err) return res.status(500).json({ error: err.message });
+        if (err) {
+            console.error("Lỗi Database:", err);
+            return res.status(500).json({ error: "Lỗi lưu dữ liệu: " + err.message });
+        }
         
         const insertId = result.insertId; 
 
@@ -144,5 +151,5 @@ app.get('/api/danh-sach-ho-so', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server Hải Tặc đang chạy ở port ${PORT}...`);
+    console.log(`Server Hải Tặc đã nhổ neo an toàn ở port ${PORT}...`);
 });
