@@ -12,17 +12,12 @@ app.use(cors());
 
 // 🌟 ĐỊA CHỈ CHUẨN: Có chữ 'g' và có hàm .trim()
 const db = mysql.createPool({
-    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com'.trim(),
-    port: 22059,
-    user: 'avnadmin',
-    password: 'AVNS_59Y53sTggDfEvCZEtrf'.trim(),
-    database: 'defaultdb',
-    ssl: {
-        rejectUnauthorized: false
-    },
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    ssl: { rejectUnauthorized: false }
 });
 
 const transporter = nodemailer.createTransport({
