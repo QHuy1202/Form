@@ -3,12 +3,24 @@ const mysql = require('mysql2');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 
+// 🧙‍♂️ THẦN CHÚ TRỊ LỖI ENOTFOUND: Ép Node.js ưu tiên tìm đường IPv4
+require('dns').setDefaultResultOrder('ipv4first');
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 1. Cấu hình Database
-const db = mysql.createConnection('mysql://avnadmin:AVNS_59Y53sTggDfEvCZEtrf@bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com:22059/defaultdb?ssl-mode=REQUIRED');
+// 1. Cấu hình Database an toàn (Đã gắn hàm .trim() để chặn ký tự tàng hình)
+const db = mysql.createConnection({
+    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com'.trim(),
+    port: 22059,
+    user: 'avnadmin',
+    password: 'AVNS_59Y53sTggDfEvCZEtrf'.trim(),
+    database: 'defaultdb',
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
 
 // 2. Cấu hình Nodemailer
 const transporter = nodemailer.createTransport({
@@ -43,7 +55,6 @@ app.post('/api/nop-ho-so', (req, res) => {
     
     const sql = `INSERT INTO ho_so_ung_tuyen (ma_ht, ho_ten, email, sdt, ngay_sinh, gioi_tinh, vi_tri, ly_do) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     
-    // Đã thêm 'async' vào hàm mũi tên này
     db.query(sql, [data.ma_ht, data.ho_ten, data.email, data.sdt, data.ngay_sinh, data.gioi_tinh, data.vi_tri, data.ly_do], async (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         
@@ -57,7 +68,6 @@ app.post('/api/nop-ho-so', (req, res) => {
                 html: `<h3>Chào ${data.ho_ten},</h3><p>Hồ sơ ứng tuyển vị trí ${viTriDep} của bạn đã được chim hải âu giao tới tàu. Vui lòng chờ Thuyền trưởng quyết định nhé!</p>`
             });
 
-            // Đã đổi localhost thành link Render thật của bạn
             const linkDongY = `https://bang-hai-tac-api.onrender.com/api/duyet-ho-so?id=${insertId}&action=dong_y`;
             const linkTuChoi = `https://bang-hai-tac-api.onrender.com/api/duyet-ho-so?id=${insertId}&action=tu_choi`;
 
@@ -92,7 +102,6 @@ app.get('/api/duyet-ho-so', (req, res) => {
     db.query(`UPDATE ho_so_ung_tuyen SET trang_thai = ? WHERE id = ?`, [action, id], (err, result) => {
         if (err) return res.send('Lỗi cập nhật DB!');
 
-        // Đã thêm 'async' vào hàm mũi tên này
         db.query(`SELECT ho_ten, email FROM ho_so_ung_tuyen WHERE id = ?`, [id], async (err, rows) => {
             if (err || rows.length === 0) return res.send('Không tìm thấy ứng viên!');
             
@@ -108,7 +117,6 @@ app.get('/api/duyet-ho-so', (req, res) => {
                     });
                     res.send('Đã duyệt ĐỒNG Ý và gửi mail báo cho ứng viên!');
                 } else {
-                    // Đã tách rời chữ awaittransporter
                     await transporter.sendMail({
                         from: '"Băng Hải Tặc Mũ Rơm" <tnquochuy10@gmail.com>',
                         to: ungVien.email,
@@ -134,7 +142,6 @@ app.get('/api/danh-sach-ho-so', (req, res) => {
     });
 });
 
-// Phải dùng process.env.PORT để Render tự cấp cổng
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server Hải Tặc đang chạy ở port ${PORT}...`);
