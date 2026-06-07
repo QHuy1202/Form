@@ -3,19 +3,16 @@ const mysql = require('mysql2');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 
-// Thần chú IPv4
-require('dns').setDefaultResultOrder('ipv4first');
-
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 🌟 THAY ĐỔI QUAN TRỌNG: Dùng createPool thay vì createConnection
+// Trả lại chữ 'g' và xóa bỏ thần chú IPv4 gây nhiễu sóng
 const db = mysql.createPool({
-    host: 'bang-hai-tac-db-tnquochuy10-73da.a.aivencloud.com',
+    host: 'bang-hai-tac-db-tnquochuy10-73da.g.aivencloud.com'.trim(),
     port: 22059,
     user: 'avnadmin',
-    password: 'AVNS_59Y53sTggDfEvCZEtrf',
+    password: 'AVNS_59Y53sTggDfEvCZEtrf'.trim(),
     database: 'defaultdb',
     ssl: {
         rejectUnauthorized: false
@@ -25,7 +22,6 @@ const db = mysql.createPool({
     queueLimit: 0
 });
 
-// Cấu hình Nodemailer
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -58,7 +54,6 @@ app.post('/api/nop-ho-so', (req, res) => {
     
     const sql = `INSERT INTO ho_so_ung_tuyen (ma_ht, ho_ten, email, sdt, ngay_sinh, gioi_tinh, vi_tri, ly_do) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     
-    // createPool vẫn dùng db.query mượt mà y như cũ
     db.query(sql, [data.ma_ht, data.ho_ten, data.email, data.sdt, data.ngay_sinh, data.gioi_tinh, data.vi_tri, data.ly_do], async (err, result) => {
         if (err) {
             console.error("Lỗi Database:", err);
